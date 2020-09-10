@@ -1,0 +1,53 @@
+{% extends "base/base.html" %}
+
+{% block title %}Post {{ post.id }}{% endblock title %}
+
+{% block content %}
+<!-- Page Header -->
+    <header class="masthead" style="background-image: url('{{ post.image.url }}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        <h2 class="subheading">{{ post.subtitle }}</h2>
+                        
+                        {% if post.author %}
+                          <span class="meta">Posted by
+                          <em><b>{{ post.author }}</b></em>
+                          on {{ post.published|date:"SHORT_DATE_FORMAT" }}</span>
+                        {% endif %}
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {{ post.content|safe }}
+        </div>
+      </div>
+    </div>
+  </article>
+  
+  <!-- Pager -->
+  {% if previous or next %}
+    <div class="container">
+      <div class="clearfix">
+        {% if previous %}
+          <a href="{% url 'post' previous.id %}" class="btn btn-primary float-left">&larr; Previous</a>
+        {% endif %}
+        {% if next %}
+          <a href="{% url 'post' next.id %}" class="btn btn-primary float-right">Next &rarr;</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+    
+{% endblock content %}
